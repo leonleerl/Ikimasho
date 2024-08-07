@@ -1,7 +1,16 @@
+
+import { AppDispatch } from "@/store";
+import { getCardList } from "@/store/modules/cardStore";
+import { useEffect} from "react";
+import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
 
+    const dispatch : AppDispatch = useDispatch();
+    useEffect(()=>{
+        dispatch(getCardList());
+    }, [dispatch])
     return <>
         <nav className="bg-red-400 p-4">
       <div className="container mx-auto flex justify-between items-center">
