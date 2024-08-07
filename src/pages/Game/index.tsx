@@ -1,10 +1,10 @@
+import HiraganaGame from "./HiraganaGame";
 
 
 const Game = () => {
 
-
     return <>
-        <div>Game!!</div>
+        <HiraganaGame/>
     </>
 }
 
