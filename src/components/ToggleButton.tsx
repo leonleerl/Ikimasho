@@ -1,14 +1,14 @@
 
 interface ToggleButtonProps {
   isOn:boolean;
-  toggleButton: () => void;
+  onToggle: () => void;
 }
 
-const ToggleButton : React.FC<ToggleButtonProps> = ({isOn, toggleButton}) => {
+const ToggleButton : React.FC<ToggleButtonProps> = ({isOn, onToggle}) => {
 
   return (
     <button
-      onClick={toggleButton}
+      onClick={onToggle}
       className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer ${isOn ? 'bg-green-400' : 'bg-gray-300'}`}
     >
       <div
