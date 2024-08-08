@@ -4,7 +4,7 @@ interface ToggleButtonProps {
   onToggle: () => void;
 }
 
-const ToggleButton : React.FC<ToggleButtonProps> = ({isOn, onToggle}) => {
+const HiraganaToggleButton : React.FC<ToggleButtonProps> = ({isOn, onToggle}) => {
 
   return (
     <button
@@ -18,4 +18,4 @@ const ToggleButton : React.FC<ToggleButtonProps> = ({isOn, onToggle}) => {
   );
 }
 
-export default ToggleButton;
+export default HiraganaToggleButton;
