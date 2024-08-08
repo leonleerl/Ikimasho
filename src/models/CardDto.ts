@@ -1,5 +1,5 @@
 
-export type Card ={
+export type CardDto ={
     id: number;
     name_hiragana: string;
     name_katakana: string;

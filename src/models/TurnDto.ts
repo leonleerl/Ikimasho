@@ -1,7 +1,7 @@
-import { Card } from "./Card"
+import { CardDto } from "./CardDto"
 
 export type Turn = {
     id: number ,
-    cards: Card[],
+    cards: CardDto[],
     is_correct: false
 }

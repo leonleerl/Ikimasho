@@ -1,12 +1,10 @@
-// src/components/ToggleButton.js
-import React, { useState } from 'react';
 
-function ToggleButton() {
-  const [isOn, setIsOn] = useState(false);
+interface ToggleButtonProps {
+  isOn:boolean;
+  toggleButton: () => void;
+}
 
-  const toggleButton = () => {
-    setIsOn(!isOn);
-  };
+const ToggleButton : React.FC<ToggleButtonProps> = ({isOn, toggleButton}) => {
 
   return (
     <button
