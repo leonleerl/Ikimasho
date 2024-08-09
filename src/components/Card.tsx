@@ -23,7 +23,6 @@ const Card : React.FC<CardProps> = ({card, is_selected})=> {
   const onRomajiToggle = () =>{
     setIsRomajiOn(!isRomajiOn);
   }
-
     return <>
         <div
               className={classNames(
