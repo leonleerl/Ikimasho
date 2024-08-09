@@ -4,12 +4,14 @@ import { CardDto } from "@/models/CardDto";
 import HiraganaToggleButton from "./HiraganaToggleButton";
 import RomajiToggleButton from "./RomajiToggleButton";
 import SpeakerButton from "./SpeakerButton";
+import classNames from "classnames";
 
 interface CardProps {
   card: CardDto
+  is_selected: boolean;
 }
 
-const Card : React.FC<CardProps> = ({card})=> {
+const Card : React.FC<CardProps> = ({card, is_selected})=> {
 
   const [isHiraganaOn, setIsHiraganaOn] = useState(false);
   const [isRomajiOn, setIsRomajiOn] = useState(false);
@@ -23,7 +25,15 @@ const Card : React.FC<CardProps> = ({card})=> {
   }
 
     return <>
-        <div className="p-4 max-w-sm mx-auto bg-pink-200 rounded-xl shadow-lg flex items-center justify-center space-x-4 m-8 w-48 h-24 hover:bg-gray-800 group">
+        <div
+              className={classNames(
+                "p-4 max-w-sm mx-auto rounded-xl shadow-lg flex items-center justify-center space-x-4 m-8 w-48 h-24 bg-pink-200 hover:bg-gray-800 group",
+                {
+                  "border-4 border-blue-500": is_selected,
+                  "border-4 border-transparent": !is_selected,
+                }
+              )}
+        >
         <div className="text-center">
           <div className="text-5xl font-medium text-black group-hover:text-green-400">
             {isHiraganaOn?card.name_katakana:card.name_hiragana}</div>
