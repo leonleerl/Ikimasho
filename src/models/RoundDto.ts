@@ -6,3 +6,8 @@ export type RoundDto = {
     answer_cards: CardDto[],
     is_correct: false
 }
+
+export type WholeRoundsDto = {
+    di: string,
+    rounds: RoundDto[]
+}

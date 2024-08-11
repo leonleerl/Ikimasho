@@ -1,11 +1,11 @@
 import Card from "@/components/Card";
-import { RoundDto } from "@/models/RoundDto";
+import { RoundDto, WholeRoundsDto } from "@/models/RoundDto";
 import { AppDispatch, RootState } from "@/store";
 import { getCardList } from "@/store/modules/cardStore";
-import { useEffect, useMemo, useState} from "react";
+import { useEffect, useState} from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import _ from "lodash";
+import _, { uniqueId } from "lodash";
 import { CardDto } from "@/models/CardDto";
 
 
@@ -20,36 +20,23 @@ import { CardDto } from "@/models/CardDto";
 const HiraganaGame = () => {
     const dispatch : AppDispatch = useDispatch();
     const [currentSelected, setCurrentSelected] = useState<number|null>(null);
+    const [selectedCard, setSelectedCard] = useState<CardDto>();
     const [currentCards, setCurrentCards] = useState<CardDto[] | null>(null);
     const [currentRound, setCurrentRound] = useState<RoundDto | null>(null);
-    const [wholeRound, setWholeRound] = useState<RoundDto[] | null>([])
+    const [wholeRound, setWholeRound] = useState<WholeRoundsDto | null>(null)
     const cardList = useSelector((state: RootState) => state.card.cardList).slice(0,5);
-
 
     useEffect(()=>{
         dispatch(getCardList());
     }, [dispatch])
 
-    // 首次加载时，载入第一轮
-    useEffect(()=>{
-        setCurrentCards(_.sampleSize(cardList, 5));
-        if (currentCards){
-            setCurrentRound(
-                {
-                    id:"",
-                    question_card:_.sampleSize(currentCards,1)[0],
-                    answer_cards:currentCards,
-                    is_correct:false
-                }
-            )
-        }
-    }, [cardList])
-
 
     useEffect(()=>{
         if (currentSelected !== null) {
-            const selectedCard = cardList.find(card => card.id === currentSelected);
+            const res = cardList.find(card => card.id === currentSelected);
+            setSelectedCard(res);
             console.log("CurrentId: " + currentSelected + "\nCurrentHiragana: " + selectedCard?.name_hiragana);
+            
           }
     }, [currentSelected])
 
@@ -57,12 +44,13 @@ const HiraganaGame = () => {
         return <div>Loading...</div>
     }
 
+
     const onCardClick = (id:number) =>{
         setCurrentSelected(id);
     }
 
     const onConfirmClick = () =>{
-
+        console.log("onConfirmClick")
     }
 
     return <>
@@ -79,7 +67,7 @@ const HiraganaGame = () => {
             </ul>
         </div>
         <div className="flex-shrink-0 mx-20">
-            <button className="bg-green-400 rounded-3xl text-lg p-2 hover:text-white">Confirm</button>
+            <button className="bg-green-400 rounded-3xl text-lg p-2 hover:text-white" onClick={()=>onConfirmClick()}>Confirm</button>
         </div>
     </div>
     </>
