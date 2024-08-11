@@ -8,13 +8,14 @@ import { useDispatch } from "react-redux";
 import _, { uniqueId } from "lodash";
 import { CardDto } from "@/models/CardDto";
 
-
-// export type RoundDto = {
-//     id: string ,
-//     question_card: CardDto,
-//     answer_cards: CardDto[],
-//     is_correct: false
-// }
+const defaultCard: CardDto = {
+    id: 0,
+    is_selected: false,
+    name_hiragana: '',
+    name_katakana: '',
+    name_romaji: '',
+    audio_play: ''
+};
 
 
 const HiraganaGame = () => {
@@ -24,11 +25,24 @@ const HiraganaGame = () => {
     const [currentCards, setCurrentCards] = useState<CardDto[] | null>(null);
     const [currentRound, setCurrentRound] = useState<RoundDto | null>(null);
     const [wholeRound, setWholeRound] = useState<WholeRoundsDto | null>(null)
-    const cardList = useSelector((state: RootState) => state.card.cardList).slice(0,5);
+    const cardList = useSelector((state: RootState) => state.card.cardList);
 
+    // 获取cards列表
     useEffect(()=>{
         dispatch(getCardList());
     }, [dispatch])
+
+    useEffect(()=>{
+        const selectedCards = _.sampleSize(cardList, 5);
+        const questionCard = _.sample(selectedCards);
+        setCurrentCards(selectedCards);
+        setCurrentRound({
+            id:uniqueId(),
+            question_card: questionCard!,
+            answer_cards:selectedCards,
+            is_correct:false
+        })
+    }, [])
 
 
     useEffect(()=>{
@@ -56,18 +70,18 @@ const HiraganaGame = () => {
     return <>
     <div className="flex justify-center items-center p-4">
         <div className="flex-shrink-0 mx-20">
-            <Card card={cardList[2]} is_selected={false}/>
+            <Card card={currentRound?.question_card || defaultCard} is_selected={false}/>
         </div>
         <div className="flex flex-col space-y-4">
             <ul>
-                {cardList.map(card => 
+                {currentRound?.answer_cards.map(card => 
                     <li key={card.id} onClick={()=>onCardClick(card.id)}>
                         <Card card={card} is_selected={card.id === currentSelected}/>
                     </li>)}
             </ul>
         </div>
         <div className="flex-shrink-0 mx-20">
-            <button className="bg-green-400 rounded-3xl text-lg p-2 hover:text-white" onClick={()=>onConfirmClick()}>Confirm</button>
+            <button className="bg-green-400 shadow-2xl rounded-3xl text-lg p-2 hover:text-white" onClick={()=>onConfirmClick()}>Confirm</button>
         </div>
     </div>
     </>

@@ -8,6 +8,6 @@ export type RoundDto = {
 }
 
 export type WholeRoundsDto = {
-    di: string,
+    id: string,
     rounds: RoundDto[]
 }

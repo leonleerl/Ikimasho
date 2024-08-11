@@ -26,7 +26,7 @@ const Card : React.FC<CardProps> = ({card, is_selected})=> {
     return <>
         <div
               className={classNames(
-                "p-4 max-w-sm mx-auto rounded-xl shadow-lg flex items-center justify-center space-x-4 m-8 w-48 h-24 bg-pink-200 hover:bg-gray-800 group",
+                "p-4 max-w-sm mx-auto rounded-xl shadow-2xl flex items-center justify-center space-x-4 m-8 w-48 h-24 bg-pink-200 hover:bg-gray-800 group",
                 {
                   "border-4 border-blue-500": is_selected,
                   "border-4 border-transparent": !is_selected,
