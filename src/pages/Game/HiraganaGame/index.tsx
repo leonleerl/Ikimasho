@@ -42,6 +42,7 @@ const HiraganaGame = () => {
             answer_cards:selectedCards,
             is_correct:false
         })
+        
     }, [])
 
 
@@ -49,7 +50,6 @@ const HiraganaGame = () => {
         if (currentSelected !== null) {
             const res = cardList.find(card => card.id === currentSelected);
             setSelectedCard(res);
-            console.log("CurrentId: " + currentSelected + "\nCurrentHiragana: " + selectedCard?.name_hiragana);
             
           }
     }, [currentSelected])
@@ -65,6 +65,13 @@ const HiraganaGame = () => {
 
     const onConfirmClick = () =>{
         console.log("onConfirmClick")
+        if (currentRound){
+            const newWholeRound : WholeRoundsDto = {
+                id: uniqueId(),
+                rounds: wholeRound ? [...wholeRound.rounds, currentRound] : [currentRound]
+            }
+            setWholeRound(newWholeRound);
+        }
     }
 
     return <>
