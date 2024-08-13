@@ -21,7 +21,7 @@ const defaultCard: CardDto = {
 const HiraganaGame = () => {
     const dispatch : AppDispatch = useDispatch();
     const [currentSelected, setCurrentSelected] = useState<number|null>(null);
-    const [selectedCard, setSelectedCard] = useState<CardDto>();
+    // const [selectedCard, setSelectedCard] = useState<CardDto>();
     const [currentCards, setCurrentCards] = useState<CardDto[] | null>(null);
     const [currentRound, setCurrentRound] = useState<RoundDto | null>(null);
     const [wholeRound, setWholeRound] = useState<WholeRoundsDto | null>(null)
@@ -46,13 +46,13 @@ const HiraganaGame = () => {
     }, [])
 
 
-    useEffect(()=>{
-        if (currentSelected !== null) {
-            const res = cardList.find(card => card.id === currentSelected);
-            setSelectedCard(res);
+    // useEffect(()=>{
+    //     if (currentSelected !== null) {
+    //         const res = cardList.find(card => card.id === currentSelected);
+    //         setSelectedCard(res);
             
-          }
-    }, [currentSelected])
+    //       }
+    // }, [currentSelected])
 
     if (cardList.length === 0){
         return <div>Loading...</div>
@@ -65,12 +65,24 @@ const HiraganaGame = () => {
 
     const onConfirmClick = () =>{
         console.log("onConfirmClick")
+        
         if (currentRound){
             const newWholeRound : WholeRoundsDto = {
                 id: uniqueId(),
                 rounds: wholeRound ? [...wholeRound.rounds, currentRound] : [currentRound]
             }
             setWholeRound(newWholeRound);
+            
+
+            const selectedCards = _.sampleSize(cardList, 5);
+            const questionCard = _.sample(selectedCards);
+            setCurrentCards(selectedCards);
+            setCurrentRound({
+                id:uniqueId(),
+                question_card: questionCard!,
+                answer_cards:selectedCards,
+                is_correct:false
+            })
         }
     }
 
