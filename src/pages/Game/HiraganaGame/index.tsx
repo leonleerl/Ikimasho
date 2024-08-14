@@ -1,7 +1,7 @@
 import Card from "@/components/Card";
 import { RoundDto, WholeRoundsDto } from "@/models/RoundDto";
 import { AppDispatch, RootState } from "@/store";
-import { getCardList, SaveRound } from "@/store/modules/cardStore";
+import { getCardList, SaveWholeRound } from "@/store/modules/cardStore";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -29,7 +29,6 @@ const HiraganaGame = () => {
     const cardList = useSelector((state: RootState) => state.card.cardList);
     const [confirmButtonVisible, setConfirmButtonVisible] = useState<boolean>(true);
     const [finishButtonVisible, setFinishButtonVisible] = useState<boolean>(false);
-    const [accuracyVisible, setAccuracyVisible] = useState<boolean>(false);
 
     useEffect(()=>{
         setWholeRound({
@@ -60,7 +59,6 @@ const HiraganaGame = () => {
         if (wholeRound?.rounds.length === 10) {
             setConfirmButtonVisible(false);
             setFinishButtonVisible(true);
-            setAccuracyVisible(true);
         }
     }, [wholeRound]);
 
@@ -75,7 +73,8 @@ const HiraganaGame = () => {
     const onFinishClick = () => {
         console.log("Finish");
         if (wholeRound){
-            dispatch(SaveRound(wholeRound));
+            dispatch(SaveWholeRound(wholeRound));
+            window.location.reload();
         }
     };
 
@@ -86,13 +85,6 @@ const HiraganaGame = () => {
             if (currentRound.question_card.id === currentSelectedId) {
                 currentRound.is_correct = true;
             }
-
-            // const newWholeRound: WholeRoundsDto = {
-            //     id: uniqueId(),
-            //     rounds: wholeRound ? [...wholeRound.rounds, currentRound] : [currentRound],
-            //     date:dayjs(new Date()).format("YYYY-MM-DD")
-            // };
-            // setWholeRound(newWholeRound);
             const updateWholeRound : WholeRoundsDto = {
                 ...wholeRound!,
                 rounds: [...(wholeRound?.rounds || []), currentRound]
@@ -141,7 +133,7 @@ const HiraganaGame = () => {
 
                 <button className=
                     {classNames("bg-red-500 shadow-2xl rounded-3xl text-lg p-2 hover:text-white ml-4", { "invisible": !finishButtonVisible })}
-                    onClick={() => onFinishClick()}>Finish</button>
+                    onClick={() => onFinishClick()}>Submit</button>
 
             </div>
         </div>

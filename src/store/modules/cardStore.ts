@@ -6,12 +6,14 @@ import { WholeRoundsDto } from "@/models/RoundDto";
 
 interface CardState {
     cardList: CardDto[];
-    roundsList : WholeRoundsDto[]
+    roundsListPost : WholeRoundsDto[],
+    roundsListGet : WholeRoundsDto[]
 }
   
 const initialState: CardState = {
     cardList: [],
-    roundsList: []
+    roundsListPost: [],
+    roundsListGet: []
 };
 
 const cardStore = createSlice({
@@ -21,14 +23,17 @@ const cardStore = createSlice({
         setCardList(state, action: PayloadAction<CardDto[]>){
             state.cardList = action.payload;
         },
+        setGetAllRounds(state, action:PayloadAction<WholeRoundsDto[]>){
+            state.roundsListGet = action.payload;
+        },
             // 同步修改方法
-        setSaveRound(state, action:PayloadAction<WholeRoundsDto>) {
-        state.roundsList.push(action.payload);
+        setSaveWholeRound(state, action:PayloadAction<WholeRoundsDto>) {
+            state.roundsListPost.push(action.payload);
       },
     }
 })
 
-const {setCardList, setSaveRound} = cardStore.actions;
+const {setCardList, setGetAllRounds, setSaveWholeRound} = cardStore.actions;
 
 // 获取卡片
 const getCardList = (): AppThunk =>{
@@ -38,16 +43,23 @@ const getCardList = (): AppThunk =>{
     }
 }
 
-const SaveRound = (data: WholeRoundsDto) : AppThunk =>{
+const getAllRounds = ():AppThunk =>{
+    return async(dispatch) => {
+        const res = await axios.get<WholeRoundsDto[]>("http://localhost:8888/rounds");
+        dispatch(setGetAllRounds(res.data));
+    }
+}
+
+const SaveWholeRound = (data: WholeRoundsDto) : AppThunk =>{
     return async (dispatch) =>{
         const res = await axios.post("http://localhost:8888/rounds",data);
-        dispatch(setSaveRound(res.data));
+        dispatch(setSaveWholeRound(res.data));
     }
 }
 
 
 
-export {getCardList, SaveRound};
+export {getCardList, getAllRounds, SaveWholeRound};
 const reducer = cardStore.reducer;
 
 export default reducer;

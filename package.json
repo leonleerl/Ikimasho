@@ -11,6 +11,8 @@
     "server": "json-server ./server/data.json --port 8888"
   },
   "dependencies": {
+    "@headlessui/react": "^2.1.2",
+    "@heroicons/react": "^2.1.5",
     "@reduxjs/toolkit": "^2.2.7",
     "@types/react-redux": "^7.1.33",
     "@types/redux-thunk": "^2.1.0",

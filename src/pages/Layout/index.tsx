@@ -12,12 +12,6 @@ const Layout = () => {
           <a href="/" className="text-white hover:text-gray-300">
             Home
           </a>
-          <a href="/about" className="text-white hover:text-gray-300">
-            About
-          </a>
-          <a href="/service" className="text-white hover:text-gray-300">
-            Service
-          </a>
           <a href="/game" className="text-white hover:text-gray-300">
             Games
           </a>
