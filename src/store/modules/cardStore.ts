@@ -6,10 +6,12 @@ import { WholeRoundsDto } from "@/models/RoundDto";
 
 interface CardState {
     cardList: CardDto[];
+    roundsList : WholeRoundsDto[]
 }
   
 const initialState: CardState = {
     cardList: [],
+    roundsList: []
 };
 
 const cardStore = createSlice({
@@ -20,8 +22,8 @@ const cardStore = createSlice({
             state.cardList = action.payload;
         },
             // 同步修改方法
-        setSaveRound(state, action) {
-        state.cardList = action.payload;
+        setSaveRound(state, action:PayloadAction<WholeRoundsDto>) {
+        state.roundsList.push(action.payload);
       },
     }
 })
@@ -36,15 +38,9 @@ const getCardList = (): AppThunk =>{
     }
 }
 
-// const addBillList = (data) => {
-//     return async (dispatch) => {
-//       const res = await axios.post("http://localhost:8888/ka", data);
-//       dispatch(addBill(res.data));
-//     };
-//   };
-const SaveRound = (data: WholeRoundsDto[]) : AppThunk =>{
+const SaveRound = (data: WholeRoundsDto) : AppThunk =>{
     return async (dispatch) =>{
-        const res = await axios.post("http://localhost:8888/cards");
+        const res = await axios.post("http://localhost:8888/rounds",data);
         dispatch(setSaveRound(res.data));
     }
 }

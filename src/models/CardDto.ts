@@ -1,6 +1,6 @@
 
 export type CardDto ={
-    id: number;
+    id: string;
     is_selected: boolean
     name_hiragana: string;
     name_katakana: string;

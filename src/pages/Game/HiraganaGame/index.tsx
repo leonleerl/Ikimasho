@@ -1,17 +1,18 @@
 import Card from "@/components/Card";
 import { RoundDto, WholeRoundsDto } from "@/models/RoundDto";
 import { AppDispatch, RootState } from "@/store";
-import { getCardList } from "@/store/modules/cardStore";
+import { getCardList, SaveRound } from "@/store/modules/cardStore";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import _, { uniqueId } from "lodash";
+import _ from "lodash";
 import { CardDto } from "@/models/CardDto";
 import classNames from "classnames";
 import dayjs from "dayjs";
+import {v4 as uuidv4} from "uuid";
 
 const defaultCard: CardDto = {
-    id: 0,
+    id: uuidv4(),
     is_selected: false,
     name_hiragana: '',
     name_katakana: '',
@@ -21,7 +22,7 @@ const defaultCard: CardDto = {
 
 const HiraganaGame = () => {
     const dispatch: AppDispatch = useDispatch();
-    const [currentSelectedId, setCurrentSelectedId] = useState<number | null>(null);
+    const [currentSelectedId, setCurrentSelectedId] = useState<string | null>(null);
     const [currentCards, setCurrentCards] = useState<CardDto[] | null>(null);
     const [currentRound, setCurrentRound] = useState<RoundDto | null>(null);
     const [wholeRound, setWholeRound] = useState<WholeRoundsDto | null>(null);
@@ -32,7 +33,7 @@ const HiraganaGame = () => {
 
     useEffect(()=>{
         setWholeRound({
-            id: uniqueId(),
+            id: uuidv4(),
             rounds: [],
             date: dayjs(new Date()).format("YYYY-MM-DD")
         })
@@ -48,7 +49,7 @@ const HiraganaGame = () => {
         const questionCard = _.sample(selectedCards);
         setCurrentCards(selectedCards);
         setCurrentRound({
-            id: uniqueId(),
+            id: uuidv4(),
             question_card: questionCard!,
             answer_cards: selectedCards,
             is_correct: false
@@ -67,12 +68,15 @@ const HiraganaGame = () => {
         return <div>Loading...</div>;
     }
 
-    const onCardClick = (id: number) => {
+    const onCardClick = (id: string) => {
         setCurrentSelectedId(id);
     };
 
     const onFinishClick = () => {
         console.log("Finish");
+        if (wholeRound){
+            dispatch(SaveRound(wholeRound));
+        }
     };
 
     const onConfirmClick = () => {
@@ -100,7 +104,7 @@ const HiraganaGame = () => {
             const questionCard = _.sample(selectedCards);
             setCurrentCards(selectedCards);
             setCurrentRound({
-                id: uniqueId(),
+                id: uuidv4(),
                 question_card: questionCard!,
                 answer_cards: selectedCards,
                 is_correct: false
