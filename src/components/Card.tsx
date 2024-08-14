@@ -37,11 +37,16 @@ const Card : React.FC<CardProps> = ({card, is_selected})=> {
           <div className="text-5xl font-medium text-black group-hover:text-green-400">
             {isHiraganaOn?card.name_katakana:card.name_hiragana}</div>
         </div>
-        <span className = {
+        {/* <span className = {
             isRomajiOn ?
             "text-slate-500 group-hover:text-green-400 text-2xl visible"
             :"text-slate-500 group-hover:text-green-400 text-2xl invisible"
             }>
+            {card.name_romaji}
+        </span> */}
+        <span className = {classNames("text-slate-500 group-hover:text-green-400 text-2xl", {
+          "visible" : isRomajiOn,
+          "invisible" : !isRomajiOn})}>
             {card.name_romaji}
         </span>
         <div>
