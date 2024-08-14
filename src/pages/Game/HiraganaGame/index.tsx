@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import _, { uniqueId } from "lodash";
 import { CardDto } from "@/models/CardDto";
-import classNames from "classnames";
 
 const defaultCard: CardDto = {
     id: 0,
@@ -73,6 +72,7 @@ const HiraganaGame = () => {
 
     const onConfirmClick = () =>{
         console.log("onConfirmClick")
+        setCurrentSelectedId(null);
         if (currentRound){
             if (currentRound.question_card.id === currentSelectedId) {
                 currentRound.is_correct = true
