@@ -1,6 +1,28 @@
+import { WholeRoundsDto } from "@/models/RoundDto";
+import { AppDispatch, RootState } from "@/store";
+import { getAllRounds } from "@/store/modules/cardStore";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Home = () =>{
 
+    const dispatch : AppDispatch= useDispatch();
+
+    const roundsList : WholeRoundsDto[] = useSelector((state: RootState) => state.card.roundsListGet);
+    const [list, setList] = useState<WholeRoundsDto[]>([]);
+
+
+    useEffect(()=>{
+        dispatch(getAllRounds());
+    }, [dispatch])
+
+    useEffect(()=>{
+
+        console.log("roundList ready!!!");
+        
+        setList(roundsList);
+    }, [roundsList])
 
     return <>
     <select name="options">
