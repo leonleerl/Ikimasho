@@ -2,7 +2,7 @@ import { CardDto } from "@/models/CardDto";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk } from "..";
-import { RoundDto } from "@/models/RoundDto";
+import { WholeRoundsDto } from "@/models/RoundDto";
 
 interface CardState {
     cardList: CardDto[];
@@ -20,13 +20,13 @@ const cardStore = createSlice({
             state.cardList = action.payload;
         },
             // 同步修改方法
-        setAddCard(state, action) {
+        setSaveRound(state, action) {
         state.cardList = action.payload;
       },
     }
 })
 
-const {setCardList, setAddCard} = cardStore.actions;
+const {setCardList, setSaveRound} = cardStore.actions;
 
 // 获取卡片
 const getCardList = (): AppThunk =>{
@@ -42,16 +42,16 @@ const getCardList = (): AppThunk =>{
 //       dispatch(addBill(res.data));
 //     };
 //   };
-const AddCard = (data: RoundDto[]) : AppThunk =>{
+const SaveRound = (data: WholeRoundsDto[]) : AppThunk =>{
     return async (dispatch) =>{
         const res = await axios.post("http://localhost:8888/cards");
-        dispatch(setAddCard(res.data));
+        dispatch(setSaveRound(res.data));
     }
 }
 
 
 
-export {getCardList, AddCard};
+export {getCardList, SaveRound};
 const reducer = cardStore.reducer;
 
 export default reducer;

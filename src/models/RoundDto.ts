@@ -9,5 +9,6 @@ export type RoundDto = {
 
 export type WholeRoundsDto = {
     id: string,
-    rounds: RoundDto[]
+    rounds: RoundDto[],
+    date: string
 }
