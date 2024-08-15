@@ -10,6 +10,7 @@ import { CardDto } from "@/models/CardDto";
 import classNames from "classnames";
 import dayjs from "dayjs";
 import {v4 as uuidv4} from "uuid";
+import { useNavigate } from "react-router-dom";
 
 const defaultCard: CardDto = {
     id: uuidv4(),
@@ -22,9 +23,11 @@ const defaultCard: CardDto = {
 
 const HiraganaGame = () => {
     const dispatch: AppDispatch = useDispatch();
+    const navigate = useNavigate();
     const [currentSelectedId, setCurrentSelectedId] = useState<string | null>(null);
     const [currentCards, setCurrentCards] = useState<CardDto[] | null>(null);
     const [currentRound, setCurrentRound] = useState<RoundDto | null>(null);
+    const [roundCount, setRoundCount] = useState<number>(1);
     const [wholeRound, setWholeRound] = useState<WholeRoundsDto | null>(null);
     const cardList = useSelector((state: RootState) => state.card.cardList);
     const [confirmButtonVisible, setConfirmButtonVisible] = useState<boolean>(true);
@@ -57,6 +60,7 @@ const HiraganaGame = () => {
 
     useEffect(() => {
         if (wholeRound?.rounds.length === 10) {
+            setRoundCount(10);
             setConfirmButtonVisible(false);
             setFinishButtonVisible(true);
         }
@@ -71,10 +75,10 @@ const HiraganaGame = () => {
     };
 
     const onFinishClick = () => {
-        console.log("Finish");
         if (wholeRound){
             dispatch(SaveWholeRound(wholeRound));
-            window.location.reload();
+            // window.location.reload();
+            navigate("/");
         }
     };
 
@@ -90,6 +94,7 @@ const HiraganaGame = () => {
                 rounds: [...(wholeRound?.rounds || []), currentRound]
             }
             setWholeRound(updateWholeRound);
+            setRoundCount(roundCount+1);
 
             // 重置状态为下一轮
             const selectedCards = _.sampleSize(cardList, 5);
@@ -107,7 +112,7 @@ const HiraganaGame = () => {
 
     return <>
         <div>
-            当前轮数：{wholeRound?.rounds.length ? wholeRound.rounds.length + 1 : 1}/10
+            当前轮数：{roundCount}/10
         </div>
         <div>
             正确率：{wholeRound?.rounds.filter(round => round.is_correct).length} / 10
@@ -126,7 +131,8 @@ const HiraganaGame = () => {
             </div>
             <div className="flex-shrink-0 mx-20">
                 <button
-                    className={classNames("bg-green-400 shadow-2xl rounded-3xl text-lg p-2 hover:text-white", { 'invisible': !confirmButtonVisible })}
+                    disabled={currentSelectedId === null}
+                    className={classNames("bg-green-400 shadow-2xl rounded-3xl text-lg p-2 hover:text-white", { 'invisible': !confirmButtonVisible})}
                     onClick={() => onConfirmClick()}>
                     Confirm
                 </button>
