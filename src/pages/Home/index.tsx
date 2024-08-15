@@ -45,7 +45,7 @@ const Home = () =>{
     // 当 selectedDate 改变或 roundsList 初始化时更新 dateRounds
     useEffect(()=>{
         if(!loading && selectedDate){
-            const currentDateRounds = roundsList.filter(item => item.date === selectedDate);
+            const currentDateRounds = roundsList.filter(item => item.date === selectedDate).reverse();
             setDateRounds(currentDateRounds);
         }
     }, [selectedDate, loading, roundsList])
@@ -82,7 +82,7 @@ const Home = () =>{
     const onSelectChanged = (event: ChangeEvent<HTMLSelectElement>) =>{
         const currentSelectedDate = event.target.value
         setSelectedDate(currentSelectedDate);
-        const currentDateRounds = roundsList.filter(item => item.date === currentSelectedDate);
+        const currentDateRounds = roundsList.filter(item => item.date === currentSelectedDate).reverse();
         setDateRounds(currentDateRounds);
     }
 
