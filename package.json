@@ -19,6 +19,7 @@
     "axios": "^1.7.3",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.12",
+    "echarts": "^5.5.1",
     "howler": "^2.2.4",
     "json-server": "^1.0.0-beta.1",
     "lodash": "^4.17.21",

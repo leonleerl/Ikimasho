@@ -1,10 +1,22 @@
-import { RoundDto, WholeRoundsDto } from "@/models/RoundDto";
+import { WholeRoundsDto } from "@/models/RoundDto";
 import { AppDispatch, RootState } from "@/store";
 import { getAllRounds } from "@/store/modules/cardStore";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import _ from 'lodash';
+
+import * as echarts from 'echarts/core';
+import { GridComponent, GridComponentOption } from 'echarts/components';
+import { LineChart, LineSeriesOption } from 'echarts/charts';
+import { UniversalTransition } from 'echarts/features';
+import { CanvasRenderer } from 'echarts/renderers';
+
+echarts.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition]);
+
+type EChartsOption = echarts.ComposeOption<
+  GridComponentOption | LineSeriesOption
+>;
 
 const Home = () =>{
 
@@ -15,7 +27,6 @@ const Home = () =>{
     const [selectedDate, setSelectedDate] = useState<string>();
     const [dateRounds, setDateRounds] = useState<WholeRoundsDto[]>();
 
-
     useEffect(()=>{
         dispatch(getAllRounds());
     }, [dispatch])
@@ -25,6 +36,28 @@ const Home = () =>{
         setDates(extractedDates);
         setSelectedDate(extractedDates[0])
     }, [roundsList])
+
+    useEffect(() => {
+        const chartDom = document.getElementById('main')!;
+        const myChart = echarts.init(chartDom);
+        const option: EChartsOption = {
+          xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              data: [150, 230, 224, 218, 135, 147, 260],
+              type: 'line'
+            }
+          ]
+        };
+    
+        option && myChart.setOption(option);
+      }, []);
 
     const onSelectChanged = (event: ChangeEvent<HTMLSelectElement>) =>{
         const currentSelectedDate = event.target.value
@@ -66,7 +99,7 @@ const Home = () =>{
                 })}
             </tbody>
         </table>
-
+        <div id="main" style={{ width: '100%', height: '400px' }} />
     </>
 }
 
