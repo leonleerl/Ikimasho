@@ -6811,105 +6811,105 @@
       "name_hiragana": "あ",
       "name_katakana": "ア",
       "name_romaji": "a",
-      "audio_play": ""
+      "audio_play": "/audio/a.mp3"
     },
     {
       "id": "1",
       "name_hiragana": "い",
       "name_katakana": "イ",
       "name_romaji": "i",
-      "audio_play": ""
+      "audio_play": "/audio/i.mp3"
     },
     {
       "id": "2",
       "name_hiragana": "う",
       "name_katakana": "ウ",
       "name_romaji": "u",
-      "audio_play": ""
+      "audio_play": "/audio/u.mp3"
     },
     {
       "id": "3",
       "name_hiragana": "え",
       "name_katakana": "エ",
       "name_romaji": "e",
-      "audio_play": ""
+      "audio_play": "/audio/e.mp3"
     },
     {
       "id": "4",
       "name_hiragana": "お",
       "name_katakana": "オ",
       "name_romaji": "o",
-      "audio_play": ""
+      "audio_play": "/audio/o.mp3"
     },
     {
       "id": "5",
       "name_hiragana": "か",
       "name_katakana": "カ",
       "name_romaji": "ka",
-      "audio_play": ""
+      "audio_play": "/audio/ka.mp3"
     },
     {
       "id": "6",
       "name_hiragana": "き",
       "name_katakana": "キ",
       "name_romaji": "ki",
-      "audio_play": ""
+      "audio_play": "/audio/ki.mp3"
     },
     {
       "id": "7",
       "name_hiragana": "く",
       "name_katakana": "ク",
       "name_romaji": "ku",
-      "audio_play": ""
+      "audio_play": "/audio/ku.mp3"
     },
     {
       "id": "8",
       "name_hiragana": "け",
       "name_katakana": "ケ",
       "name_romaji": "ke",
-      "audio_play": ""
+      "audio_play": "/audio/ke.mp3"
     },
     {
       "id": "9",
       "name_hiragana": "こ",
       "name_katakana": "コ",
       "name_romaji": "ko",
-      "audio_play": ""
+      "audio_play": "/audio/ko.mp3"
     },
     {
       "id": "10",
       "name_hiragana": "な",
       "name_katakana": "ナ",
       "name_romaji": "na",
-      "audio_play": ""
+      "audio_play": "/audio/na.mp3"
     },
     {
       "id": "11",
       "name_hiragana": "に",
       "name_katakana": "ニ",
       "name_romaji": "ni",
-      "audio_play": ""
+      "audio_play": "/audio/ni.mp3"
     },
     {
       "id": "12",
       "name_hiragana": "ぬ",
       "name_katakana": "ヌ",
       "name_romaji": "nu",
-      "audio_play": ""
+      "audio_play": "/audio/nu.mp3"
     },
     {
       "id": "13",
       "name_hiragana": "ね",
       "name_katakana": "ネ",
       "name_romaji": "ne",
-      "audio_play": ""
+      "audio_play": "/audio/ne.mp3"
     },
     {
       "id": "14",
       "name_hiragana": "の",
       "name_katakana": "ノ",
       "name_romaji": "no",
-      "audio_play": ""
+      "audio_play": "/audio/no.mp3"
     }
   ]
 }

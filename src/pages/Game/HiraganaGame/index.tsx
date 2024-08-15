@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import {v4 as uuidv4} from "uuid";
 import { useNavigate } from "react-router-dom";
 import HiraganaToggleButton from "@/components/HiraganaToggleButton";
+import SpeakerButton from "@/components/SpeakerButton";
 
 const defaultCard: CardDto = {
     id: uuidv4(),
@@ -34,8 +35,10 @@ const HiraganaGame = () => {
     const [confirmButtonVisible, setConfirmButtonVisible] = useState<boolean>(true);
     const [finishButtonVisible, setFinishButtonVisible] = useState<boolean>(false);
 
-    const [isAllHiraganaOn, setIsAllHiraganaOn] = useState<boolean>(true);
-    const [isAllRomajiOn, setIsAllRomajiOn] = useState<boolean>(true);
+    const [isAllHiraganaOn, setIsAllHiraganaOn] = useState<boolean>(false);
+    const [isAllRomajiOn, setIsAllRomajiOn] = useState<boolean>(false);
+
+    const audioPath = currentRound?.question_card?.audio_play || "a.mp3";
 
     useEffect(()=>{
         setWholeRound({
@@ -123,21 +126,22 @@ const HiraganaGame = () => {
       }
 
     return <>
-        <div>
+        <div className="p-1">
             当前轮数：{roundCount}/10
         </div>
-        <div>
+        <div className="p-1">
             正确率：{wholeRound?.rounds.filter(round => round.is_correct).length} / 10
         </div>
-        <div>
+        <div className="flex p-1">
             打开片假名:<HiraganaToggleButton isOn={isAllHiraganaOn} onToggle={onAllHiraganaToggle}/>
         </div>
-        <div>
+        <div className="flex p-1">
             打开罗马字:<HiraganaToggleButton isOn={isAllRomajiOn} onToggle={onAllRomajiToggle}/>
         </div>
         <div className="flex justify-center items-center p-4">
             <div className="flex-shrink-0 mx-20">
-                <Card card={currentRound?.question_card || defaultCard} is_selected={false} isAllHiraganaOn={isAllHiraganaOn} isAllRomajiOn={isAllRomajiOn}/>
+                {/* <Card card={currentRound?.question_card || defaultCard} is_selected={false} isAllHiraganaOn={isAllHiraganaOn} isAllRomajiOn={isAllRomajiOn}/> */}
+                <SpeakerButton audioPath={audioPath}/>
             </div>
             <div className="flex flex-col space-y-4">
                 <ul>
