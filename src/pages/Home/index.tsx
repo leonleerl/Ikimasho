@@ -26,17 +26,30 @@ const Home = () =>{
     const [dates, setDates] = useState<string[]>([]);
     const [selectedDate, setSelectedDate] = useState<string>();
     const [dateRounds, setDateRounds] = useState<WholeRoundsDto[]>();
+    const [loading, setLoading] = useState<boolean>(true); // 添加加载状态
 
     useEffect(()=>{
         dispatch(getAllRounds());
     }, [dispatch])
 
     useEffect(()=>{
-        const extractedDates = _.uniq(roundsList.map(round=>round.date));
-        setDates(extractedDates);
-        setSelectedDate(extractedDates[0])
+        if(roundsList.length > 0){    
+            const extractedDates = _.uniq(roundsList.map(round=>round.date));
+            setDates(extractedDates);
+            setSelectedDate(extractedDates[0])
+            setLoading(false); // 数据加载完成后取消加载状态
+        }
     }, [roundsList])
 
+    // 当 selectedDate 改变或 roundsList 初始化时更新 dateRounds
+    useEffect(()=>{
+        if(!loading && selectedDate){
+            const currentDateRounds = roundsList.filter(item => item.date === selectedDate);
+            setDateRounds(currentDateRounds);
+        }
+    }, [selectedDate, loading])
+
+    
     useEffect(() => {
         const chartDom = document.getElementById('main')!;
         const myChart = echarts.init(chartDom);
@@ -57,8 +70,7 @@ const Home = () =>{
           series: [
             {
               data: dateRounds?.map(round => round.rounds.filter(item => item.is_correct).length).reverse(),
-              type: 'line',
-              label:"正确率曲线"
+              type: 'line'
             }
           ]
         };
