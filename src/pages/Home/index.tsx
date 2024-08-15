@@ -67,7 +67,10 @@ const Home = () =>{
     }
 
     return <>
-            <select name="options" onChange={onSelectChanged}>
+        <div style={{ display: 'flex', width: '100%', height: '400px' }}>
+      {/* 左边部分 */}
+      <div style={{ flex: 1, padding: '20px' }}>
+      <select name="options" onChange={onSelectChanged}>
                 {dates.map((date, index) => (
                     <option key={index} value={date} >
                         {date}
@@ -92,14 +95,20 @@ const Home = () =>{
 
                     return (
                         <tr key={item.id}>
-                            <td className="px-6 py-4 whitespace-nowrap">{correctRounds}/{totalRounds}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{incorrectHiragana}</td>
+                            <td className="px-6 py-4 whitespace-nowrap w-1/3">{correctRounds}/{totalRounds}</td>
+                            <td className="px-6 py-4 whitespace-nowrap w-2/3">{incorrectHiragana}</td>
                         </tr>
                     )
                 })}
             </tbody>
         </table>
-        <div id="main" style={{ width: '100%', height: '400px' }} />
+      </div>
+
+      {/* 右边部分 */}
+      <div style={{ flex: 1 }}>
+        <div id="main" style={{ width: '100%', height: '100%' }} />
+      </div>
+    </div>
     </>
 }
 
