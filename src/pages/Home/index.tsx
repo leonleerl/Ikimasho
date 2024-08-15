@@ -40,24 +40,31 @@ const Home = () =>{
     useEffect(() => {
         const chartDom = document.getElementById('main')!;
         const myChart = echarts.init(chartDom);
+        const xLabel = _.range(1, (dateRounds?.length || 1)+1).map(item => `第${item}次`);
         const option: EChartsOption = {
           xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: xLabel,
+            axisLabel:{
+                interval:0
+            }
           },
           yAxis: {
-            type: 'value'
+            type: 'value',
+            min:0,
+            max:10,
           },
           series: [
             {
-              data: [150, 230, 224, 218, 135, 147, 260],
-              type: 'line'
+              data: dateRounds?.map(round => round.rounds.filter(item => item.is_correct).length).reverse(),
+              type: 'line',
+              label:"正确率曲线"
             }
           ]
         };
     
         option && myChart.setOption(option);
-      }, []);
+      }, [dateRounds]);
 
     const onSelectChanged = (event: ChangeEvent<HTMLSelectElement>) =>{
         const currentSelectedDate = event.target.value
