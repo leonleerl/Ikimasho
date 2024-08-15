@@ -36,7 +36,8 @@ const Home = () =>{
         if(roundsList.length > 0){    
             const extractedDates = _.uniq(roundsList.map(round=>round.date));
             setDates(extractedDates);
-            setSelectedDate(extractedDates[0])
+            // 展示今天的内容，即日期数组最后一个
+            setSelectedDate(extractedDates[extractedDates.length-1])
             setLoading(false); // 数据加载完成后取消加载状态
         }
     }, [roundsList])
@@ -47,9 +48,9 @@ const Home = () =>{
             const currentDateRounds = roundsList.filter(item => item.date === selectedDate);
             setDateRounds(currentDateRounds);
         }
-    }, [selectedDate, loading])
+    }, [selectedDate, loading, roundsList])
 
-    
+
     useEffect(() => {
         const chartDom = document.getElementById('main')!;
         const myChart = echarts.init(chartDom);
@@ -89,7 +90,7 @@ const Home = () =>{
         <div style={{ display: 'flex', width: '100%', height: '400px' }}>
       {/* 左边部分 */}
       <div style={{ flex: 1, padding: '20px' }}>
-      <select name="options" onChange={onSelectChanged}>
+      <select name="options" onChange={onSelectChanged} value={selectedDate}>
                 {dates.map((date, index) => (
                     <option key={index} value={date} >
                         {date}
