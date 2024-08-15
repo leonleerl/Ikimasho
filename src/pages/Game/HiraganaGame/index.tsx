@@ -11,6 +11,7 @@ import classNames from "classnames";
 import dayjs from "dayjs";
 import {v4 as uuidv4} from "uuid";
 import { useNavigate } from "react-router-dom";
+import HiraganaToggleButton from "@/components/HiraganaToggleButton";
 
 const defaultCard: CardDto = {
     id: uuidv4(),
@@ -32,6 +33,9 @@ const HiraganaGame = () => {
     const cardList = useSelector((state: RootState) => state.card.cardList);
     const [confirmButtonVisible, setConfirmButtonVisible] = useState<boolean>(true);
     const [finishButtonVisible, setFinishButtonVisible] = useState<boolean>(false);
+
+    const [isAllHiraganaOn, setIsAllHiraganaOn] = useState<boolean>(true);
+    const [isAllRomajiOn, setIsAllRomajiOn] = useState<boolean>(true);
 
     useEffect(()=>{
         setWholeRound({
@@ -110,6 +114,14 @@ const HiraganaGame = () => {
         }
     };
 
+    const onAllHiraganaToggle = () =>{
+        setIsAllHiraganaOn(!isAllHiraganaOn);
+      }
+    
+      const onAllRomajiToggle = () =>{
+        setIsAllRomajiOn(!isAllRomajiOn);
+      }
+
     return <>
         <div>
             当前轮数：{roundCount}/10
@@ -117,15 +129,21 @@ const HiraganaGame = () => {
         <div>
             正确率：{wholeRound?.rounds.filter(round => round.is_correct).length} / 10
         </div>
+        <div>
+            打开片假名:<HiraganaToggleButton isOn={isAllHiraganaOn} onToggle={onAllHiraganaToggle}/>
+        </div>
+        <div>
+            打开罗马字:<HiraganaToggleButton isOn={isAllRomajiOn} onToggle={onAllRomajiToggle}/>
+        </div>
         <div className="flex justify-center items-center p-4">
             <div className="flex-shrink-0 mx-20">
-                <Card card={currentRound?.question_card || defaultCard} is_selected={false} />
+                <Card card={currentRound?.question_card || defaultCard} is_selected={false} isAllHiraganaOn={isAllHiraganaOn} isAllRomajiOn={isAllRomajiOn}/>
             </div>
             <div className="flex flex-col space-y-4">
                 <ul>
                     {currentRound?.answer_cards.map(card =>
                         <li key={card.id} onClick={() => onCardClick(card.id)}>
-                            <Card card={card} is_selected={card.id === currentSelectedId} />
+                            <Card card={card} is_selected={card.id === currentSelectedId} isAllHiraganaOn={isAllHiraganaOn} isAllRomajiOn={isAllRomajiOn}/>
                         </li>)}
                 </ul>
             </div>
