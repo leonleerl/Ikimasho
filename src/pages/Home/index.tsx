@@ -101,7 +101,7 @@ const Home = () =>{
             <thead>
                 <tr className="bg-gray-100">
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">正确率</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">错误的平假名</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">做错的平假名</th>
                 </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">

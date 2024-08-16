@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import _ from "lodash";
-import { CardDto } from "@/models/CardDto";
 import classNames from "classnames";
 import dayjs from "dayjs";
 import {v4 as uuidv4} from "uuid";
@@ -14,20 +13,11 @@ import { useNavigate } from "react-router-dom";
 import HiraganaToggleButton from "@/components/HiraganaToggleButton";
 import SpeakerButton from "@/components/SpeakerButton";
 
-const defaultCard: CardDto = {
-    id: uuidv4(),
-    is_selected: false,
-    name_hiragana: '',
-    name_katakana: '',
-    name_romaji: '',
-    audio_play: ''
-};
 
 const HiraganaGame = () => {
     const dispatch: AppDispatch = useDispatch();
     const navigate = useNavigate();
     const [currentSelectedId, setCurrentSelectedId] = useState<string | null>(null);
-    const [currentCards, setCurrentCards] = useState<CardDto[] | null>(null);
     const [currentRound, setCurrentRound] = useState<RoundDto | null>(null);
     const [roundCount, setRoundCount] = useState<number>(1);
     const [wholeRound, setWholeRound] = useState<WholeRoundsDto | null>(null);
@@ -56,7 +46,6 @@ const HiraganaGame = () => {
     useEffect(() => {
         const selectedCards = _.sampleSize(cardList, 5);
         const questionCard = _.sample(selectedCards);
-        setCurrentCards(selectedCards);
         setCurrentRound({
             id: uuidv4(),
             question_card: questionCard!,
@@ -106,7 +95,6 @@ const HiraganaGame = () => {
             // 重置状态为下一轮
             const selectedCards = _.sampleSize(cardList, 5);
             const questionCard = _.sample(selectedCards);
-            setCurrentCards(selectedCards);
             setCurrentRound({
                 id: uuidv4(),
                 question_card: questionCard!,
@@ -126,18 +114,19 @@ const HiraganaGame = () => {
       }
 
     return <>
-        <div className="p-1">
-            当前轮数：{roundCount}/10
-        </div>
-        <div className="p-1">
+        <div className="flex p-1">
+            当前轮数：{roundCount}/10 
+            &emsp;
             正确率：{wholeRound?.rounds.filter(round => round.is_correct).length} / 10
         </div>
         <div className="flex p-1">
             打开片假名:<HiraganaToggleButton isOn={isAllHiraganaOn} onToggle={onAllHiraganaToggle}/>
-        </div>
-        <div className="flex p-1">
+            &emsp;
             打开罗马字:<HiraganaToggleButton isOn={isAllRomajiOn} onToggle={onAllRomajiToggle}/>
         </div>
+        {/* <div className="flex p-1">
+            
+        </div> */}
         <div className="flex justify-center items-center p-4">
             <div className="flex-shrink-0 mx-20">
                 {/* <Card card={currentRound?.question_card || defaultCard} is_selected={false} isAllHiraganaOn={isAllHiraganaOn} isAllRomajiOn={isAllRomajiOn}/> */}
