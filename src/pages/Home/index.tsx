@@ -54,7 +54,7 @@ const Home = () =>{
     useEffect(() => {
         const chartDom = document.getElementById('main')!;
         const myChart = echarts.init(chartDom);
-        const xLabel = _.range(1, (dateRounds?.length || 1)+1).map(item => `第${item}次`);
+        const xLabel = _.range(1, (dateRounds?.length || 1)+1).map(item => `${item}回目`);
         const option: EChartsOption = {
           xAxis: {
             type: 'category',
@@ -100,8 +100,8 @@ const Home = () =>{
         <table className="min-w-full table-auto">
             <thead>
                 <tr className="bg-gray-100">
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">正确率</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">做错的平假名</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Accuracy</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Need to review</th>
                 </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">

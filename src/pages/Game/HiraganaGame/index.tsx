@@ -115,14 +115,14 @@ const HiraganaGame = () => {
 
     return <>
         <div className="flex p-1">
-            当前轮数：{roundCount}/10 
+            Round:{roundCount}/10 
             &emsp;
-            正确率：{wholeRound?.rounds.filter(round => round.is_correct).length} / 10
+            Accuracy：{wholeRound?.rounds.filter(round => round.is_correct).length} / 10
         </div>
         <div className="flex p-1">
-            打开片假名:<HiraganaToggleButton isOn={isAllHiraganaOn} onToggle={onAllHiraganaToggle}/>
+            Katakana:<HiraganaToggleButton isOn={isAllHiraganaOn} onToggle={onAllHiraganaToggle}/>
             &emsp;
-            打开罗马字:<HiraganaToggleButton isOn={isAllRomajiOn} onToggle={onAllRomajiToggle}/>
+            Romaji:<HiraganaToggleButton isOn={isAllRomajiOn} onToggle={onAllRomajiToggle}/>
         </div>
         {/* <div className="flex p-1">
             
